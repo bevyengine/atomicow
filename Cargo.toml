@@ -3,8 +3,7 @@ name = "atomicow"
 # TODO: Should development versions have the `-dev` suffix, like `bevy` does?
 version = "1.0.0-dev"
 edition = "2021"
-# TODO(BD103): Determine MSRV once #2 is closed.
-# rust-version = ""
+rust-version = "1.63.0"
 description = "A `Cow`-like data structure where owned data is stored inside an `Arc`."
 repository = "https://github.com/bevyengine/atomicow"
 license = "MIT OR Apache-2.0"
