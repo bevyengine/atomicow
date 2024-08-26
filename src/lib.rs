@@ -14,7 +14,7 @@ use std::{
 /// ever).
 ///
 /// This also makes an opinionated tradeoff by adding a [`CowArc::Static`] and implementing
-/// [`From<&'static T>`] instead of [`From<'a T>`]. This preserves the static context and prevents
+/// `From<&'static T>` instead of `From<'a T>`. This preserves the static context and prevents
 /// conversion to [`CowArc::Owned`] in cases where a reference is known to be static. This is an
 /// optimization that prevents allocations and atomic ref-counting.
 ///
