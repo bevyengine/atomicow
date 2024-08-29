@@ -1,4 +1,7 @@
-//! A `Cow`-like data structure where owned data is stored inside an `Arc`.
+//! <style>
+//! .rustdoc-hidden { display: none; }
+//! </style>
+#![doc = include_str!("../README.md")]
 
 use std::{
     borrow::Borrow,
