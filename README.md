@@ -1,4 +1,8 @@
+<div class="rustdoc-hidden">
+
 # `atomicow`
+
+</div>
 
 A [`Cow`](https://doc.rust-lang.org/std/borrow/enum.Cow.html)-like data structure where owned data is stored inside an [`Arc`](https://doc.rust-lang.org/std/sync/struct.Arc.html).
 Here's what it looks like:
