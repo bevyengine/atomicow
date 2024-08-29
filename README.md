@@ -31,5 +31,5 @@ making sure that we don't allocate when converting it to an owned form.
 
 ## Contributing
 
-This crate is maintained by the Bevy Engine, but is intended to be tiny, stable, zero-dependency, and broadly useful.
+This crate is maintained by the Bevy Engine, and is intended to be tiny, stable, zero-dependency, and broadly useful.
 Issues and pull requests are genuinely welcome!
