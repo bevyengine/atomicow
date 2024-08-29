@@ -33,5 +33,5 @@ the enum structure used in `atomicow` is both more transparent and more flexible
 
 ## Contributing
 
-This crate is maintained by the Bevy Engine, and is intended to be tiny, stable, zero-dependency, and broadly useful.
+This crate is maintained by the Bevy organization, and is intended to be tiny, stable, zero-dependency, and broadly useful.
 [Issues](https://github.com/bevyengine/atomicow/issues) and [pull requests](https://github.com/bevyengine/atomicow/pulls) are genuinely welcome!
