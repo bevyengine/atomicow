@@ -1,4 +1,4 @@
-//! A `Cow`-like data structure where owned data is stored inside an `Arc`.
+#![doc = include_str!("../README.md")]
 
 use std::{
     borrow::Borrow,
