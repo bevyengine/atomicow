@@ -36,14 +36,17 @@ pub enum CowArc<'a, T: ?Sized + 'static> {
     Owned(Arc<T>),
 }
 
-impl<T: 'static> CowArc<'static, T> {
+impl<T: ?Sized + 'static> CowArc<'static, T> {
     /// Creates a new [`CowArc::Owned`] from a value.
     ///
     /// This is simply a convenience method;
     /// the value will be wrapped in an [`Arc`].
     ///
     /// Note that `T` must be [`Sized`]: use the enum constructor directly if `T` is unsized.
-    pub fn new_owned(value: T) -> Self {
+    pub fn new_owned(value: T) -> Self
+    where
+        T: Sized,
+    {
         CowArc::Owned(Arc::new(value))
     }
 
