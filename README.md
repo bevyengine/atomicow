@@ -3,7 +3,7 @@
 A [`Cow`](https://doc.rust-lang.org/std/borrow/enum.Cow.html)-like data structure where owned data is stored inside an [`Arc`](https://doc.rust-lang.org/std/sync/struct.Arc.html).
 Here's what it looks like:
 
-```rust
+```rust, ignore
 pub enum CowArc<'a, T: ?Sized + 'static> {
     Borrowed(&'a T),
     Static(&'static T),
