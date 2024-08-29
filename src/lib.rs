@@ -36,6 +36,25 @@ pub enum CowArc<'a, T: ?Sized + 'static> {
     Owned(Arc<T>),
 }
 
+impl<'a: 'static, T: 'static> CowArc<'static, T> {
+    /// Creates a new [`CowArc::Owned`] from a value.
+    ///
+    /// This is simply a convenience method;
+    /// the value will be wrapped in an [`Arc`].
+    ///
+    /// Note that `T` must be [`Sized`]: use the enum constructor directly if `T` is unsized.
+    pub fn new_owned(value: T) -> Self {
+        CowArc::Owned(Arc::new(value))
+    }
+
+    /// Creates a new [`CowArc::Owned`] from an [`Arc`]-like value.
+    ///
+    /// The [`Arc`] will be moved into the [`CowArc`].
+    pub fn new_owned_from_arc(value: impl Into<Arc<T>>) -> Self {
+        CowArc::Owned(value.into())
+    }
+}
+
 impl<T: ?Sized> CowArc<'static, T> {
     /// Indicates this [`CowArc`] should have a static lifetime.
     ///
