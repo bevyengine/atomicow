@@ -36,7 +36,7 @@ pub enum CowArc<'a, T: ?Sized + 'static> {
     Owned(Arc<T>),
 }
 
-impl<'a: 'static, T: 'static> CowArc<'static, T> {
+impl<T: 'static> CowArc<'static, T> {
     /// Creates a new [`CowArc::Owned`] from a value.
     ///
     /// This is simply a convenience method;
