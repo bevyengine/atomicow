@@ -30,8 +30,6 @@ How does `atomicow` differ?
 Put simply: `cow_arc`'s data structure is just a wrapper over an `Arc`.
 While this is exactly what you need in some use cases,
 the enum structure used in `atomicow` is both more transparent and more flexible.
-Storing an object with a static lifetime inside of it *preserves* the static lifetime,
-making sure that we don't allocate when converting it to an owned form.
 
 ## Contributing
 
