@@ -4,6 +4,7 @@
 
 </div>
 
+![License](https://img.shields.io/badge/license-MIT%2FApache-blue.svg)
 [![Crates.io](https://img.shields.io/crates/v/atomicow.svg)](https://crates.io/crates/atomicow)
 [![Downloads](https://img.shields.io/crates/d/atomicow.svg)](https://crates.io/crates/atomicow)
 [![Docs](https://docs.rs/atomicow/badge.svg)](https://docs.rs/atomicow/latest/atomicow/)
