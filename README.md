@@ -4,6 +4,11 @@
 
 </div>
 
+![License](https://img.shields.io/badge/license-MIT%2FApache-blue.svg)
+[![Crates.io](https://img.shields.io/crates/v/atomicow.svg)](https://crates.io/crates/atomicow)
+[![Downloads](https://img.shields.io/crates/d/atomicow.svg)](https://crates.io/crates/atomicow)
+[![Docs](https://docs.rs/atomicow/badge.svg)](https://docs.rs/atomicow/latest/atomicow/)
+
 A [`Cow`](https://doc.rust-lang.org/std/borrow/enum.Cow.html)-like data structure where owned data is stored inside an [`Arc`](https://doc.rust-lang.org/std/sync/struct.Arc.html).
 Here's what it looks like:
 
