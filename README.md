@@ -20,7 +20,7 @@ pub enum CowArc<'a, T: ?Sized + 'static> {
 }
 ```
 
-As implied by the `Cow` name, this type allows for cheap immutable reference, but can be converted into an owned form via cloning when mutation or ownership is required.
+As implied by the `Cow` name, this type allows for cheap immutable reference, but can be converted into a shared owned form via cloning when lifetime extension is required.
 
 This data structure is particularly useful for `str` or other values with a static lifetime,
 as might be used in structures such as asset paths.
