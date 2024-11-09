@@ -2,7 +2,7 @@
 name = "atomicow"
 version = "1.0.0"
 edition = "2021"
-rust-version = "1.63.0"
+rust-version = "1.75.0"
 description = "A `Cow`-like data structure where owned data is stored inside an `Arc`."
 repository = "https://github.com/bevyengine/atomicow"
 license = "MIT OR Apache-2.0"
