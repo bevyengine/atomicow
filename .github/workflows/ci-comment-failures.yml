@@ -160,5 +160,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              body: 'Your PR increases the Minimum Supported Rust Version (`msrv`). Please update the `rust-version` field in ``Cargo.toml.'
+              body: 'Your PR increases the Minimum Supported Rust Version (msrv). Please update the `rust-version` field in ``Cargo.toml.'
             });
