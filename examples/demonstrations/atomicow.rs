@@ -1,4 +1,1 @@
-use atomicow::*;
-
-fn main() {
-}
+fn main() {}
