@@ -1,0 +1,12 @@
+[package]
+name = "errors"
+edition = "2021"
+description = "Documentation and tests for error codes"
+publish = false
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+atomicow = { path = ".." }
+
+[lints]
+workspace = true
