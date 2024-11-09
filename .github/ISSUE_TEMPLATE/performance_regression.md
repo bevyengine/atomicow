@@ -6,7 +6,7 @@ labels: C-Bug, C-Performance, P-Regression, S-Needs-Triage
 assignees: ''
 ---
 
-## `template_crate_name` version
+## `atomicow` version
 
 Original: `` <!-- The release number or commit hash of the version you last tested your app against. -->
 
@@ -24,7 +24,7 @@ Rust version you're using: (`cargo --version`)
 
 > Notes:
 >
-> - Pay attention to the msrv (minimum supported rust version) of `template_crate_name`.
+> - Pay attention to the msrv (minimum supported rust version) of `atomicow`.
 > - `nightly` should work, but sometimes there are regressions: please let us know!
 
 Operating system, including version:
@@ -47,7 +47,7 @@ data as possible.
 
 If your app is running slowly, please show profiler traces before and after the change.
 For more information on how to get these traces, see
-<https://github.com/bevyengine/template_crate_name/blob/main/documentation/profiling.md>.
+<https://github.com/bevyengine/atomicow/blob/main/documentation/profiling.md>.
 
 If this is about a compile-time regression, please provide the full output of `cargo build --timings`,
 for more information see <https://doc.rust-lang.org/cargo/reference/timings.html>.

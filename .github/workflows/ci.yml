@@ -244,7 +244,7 @@ jobs:
       - name: Build
         # this uses the same command as when running the example to ensure build is reused
         run: |
-          CI_TESTING_CONFIG=.github/example-run/template_example_name.ron cargo build --example template_example_name
+          CI_TESTING_CONFIG=.github/example-run/atomicow.ron cargo build --example atomicow
       - name: Run examples
         run: |
           for example in .github/example-run/*.ron; do
@@ -306,7 +306,7 @@ jobs:
       - name: Get minimum supported rust version
         id: msrv
         run: |
-          msrv=`cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[] | select(.name=="template_crate_name") | .rust_version'`
+          msrv=`cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[] | select(.name=="atomicow") | .rust_version'`
           echo "msrv=$msrv" >> $GITHUB_OUTPUT
       - uses: dtolnay/rust-toolchain@master
         with:

@@ -2,8 +2,8 @@
 name = "compile_fail_utils"
 edition = "2021"
 description = "Utilities for compile tests"
-homepage = "https://github.com/bevyengine/template_crate_name"
-repository = "https://github.com/bevyengine/template_crate_name"
+homepage = "https://github.com/bevyengine/atomicow"
+repository = "https://github.com/bevyengine/atomicow"
 license = "MIT OR Apache-2.0"
 publish = false
 

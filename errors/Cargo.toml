@@ -6,7 +6,7 @@ publish = false
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-template_crate_name = { path = ".." }
+atomicow = { path = ".." }
 
 [lints]
 workspace = true

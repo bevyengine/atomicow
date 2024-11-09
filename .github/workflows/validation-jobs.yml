@@ -68,7 +68,7 @@ jobs:
       - name: Build
         # this uses the same command as when running the example to ensure build is reused
         run: |
-          CI_TESTING_CONFIG=.github/example-run/template_example_name.ron cargo build --example template_example_name
+          CI_TESTING_CONFIG=.github/example-run/atomicow.ron cargo build --example atomicow
       - name: Run examples
         run: |
           for example in .github/example-run/*.ron; do
@@ -95,7 +95,7 @@ jobs:
         shell: bash
         # this uses the same command as when running the example to ensure build is reused
         run: |
-          CI_TESTING_CONFIG=.github/example-run/template_example_name.ron cargo build --example template_example_name
+          CI_TESTING_CONFIG=.github/example-run/atomicow.ron cargo build --example atomicow
       - name: Run examples
         shell: bash
         run: |
