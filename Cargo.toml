@@ -8,3 +8,13 @@ repository = "https://github.com/bevyengine/atomicow"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+
+[features]
+default = ["std"]
+std = []
+
+[target.'cfg(not(target_has_atomic = "ptr"))'.dependencies]
+portable-atomic = { version = "1", default-features = false }
+portable-atomic-util = { version = "0.2.4", features = [
+  "alloc",
+] }
