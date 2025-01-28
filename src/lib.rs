@@ -2,15 +2,29 @@
 //! .rustdoc-hidden { display: none; }
 //! </style>
 #![doc = include_str!("../README.md")]
+#![no_std]
 
-use std::{
+extern crate alloc;
+
+#[cfg(feature = "std")]
+extern crate std;
+
+use alloc::string::String;
+use core::{
     borrow::Borrow,
     fmt::{Debug, Display},
     hash::Hash,
     ops::Deref,
-    path::{Path, PathBuf},
-    sync::Arc,
 };
+
+#[cfg(feature = "std")]
+use std::path::{Path, PathBuf};
+
+#[cfg(target_has_atomic = "ptr")]
+use alloc::sync::Arc;
+
+#[cfg(not(target_has_atomic = "ptr"))]
+use portable_atomic_util::Arc;
 
 /// Much like a [`Cow`](std::borrow::Cow), but owned values are [`Arc`]-ed to make clones cheap.
 /// This should be used for values that are cloned for use across threads and change rarely (if
@@ -73,7 +87,7 @@ impl<T: ?Sized> CowArc<'static, T> {
     }
 }
 
-impl<'a, T: ?Sized> Deref for CowArc<'a, T> {
+impl<T: ?Sized> Deref for CowArc<'_, T> {
     type Target = T;
 
     #[inline]
@@ -85,14 +99,14 @@ impl<'a, T: ?Sized> Deref for CowArc<'a, T> {
     }
 }
 
-impl<'a, T: ?Sized> Borrow<T> for CowArc<'a, T> {
+impl<T: ?Sized> Borrow<T> for CowArc<'_, T> {
     #[inline]
     fn borrow(&self) -> &T {
         self
     }
 }
 
-impl<'a, T: ?Sized> AsRef<T> for CowArc<'a, T> {
+impl<T: ?Sized> AsRef<T> for CowArc<'_, T> {
     #[inline]
     fn as_ref(&self) -> &T {
         self
@@ -127,7 +141,7 @@ where
     }
 }
 
-impl<'a, T: ?Sized> Clone for CowArc<'a, T> {
+impl<T: ?Sized> Clone for CowArc<'_, T> {
     #[inline]
     fn clone(&self) -> Self {
         match self {
@@ -138,39 +152,39 @@ impl<'a, T: ?Sized> Clone for CowArc<'a, T> {
     }
 }
 
-impl<'a, T: PartialEq + ?Sized> PartialEq for CowArc<'a, T> {
+impl<T: PartialEq + ?Sized> PartialEq for CowArc<'_, T> {
     #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.deref().eq(other.deref())
     }
 }
 
-impl<'a, T: PartialEq + ?Sized> Eq for CowArc<'a, T> {}
+impl<T: PartialEq + ?Sized> Eq for CowArc<'_, T> {}
 
-impl<'a, T: Hash + ?Sized> Hash for CowArc<'a, T> {
+impl<T: Hash + ?Sized> Hash for CowArc<'_, T> {
     #[inline]
-    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+    fn hash<H: core::hash::Hasher>(&self, state: &mut H) {
         self.deref().hash(state);
     }
 }
 
-impl<'a, T: Debug + ?Sized> Debug for CowArc<'a, T> {
+impl<T: Debug + ?Sized> Debug for CowArc<'_, T> {
     #[inline]
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         Debug::fmt(self.deref(), f)
     }
 }
 
-impl<'a, T: Display + ?Sized> Display for CowArc<'a, T> {
+impl<T: Display + ?Sized> Display for CowArc<'_, T> {
     #[inline]
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         Display::fmt(self.deref(), f)
     }
 }
 
-impl<'a, T: PartialOrd + ?Sized> PartialOrd for CowArc<'a, T> {
+impl<T: PartialOrd + ?Sized> PartialOrd for CowArc<'_, T> {
     #[inline]
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+    fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
         self.deref().partial_cmp(other.deref())
     }
 }
@@ -181,6 +195,7 @@ impl Default for CowArc<'static, str> {
     }
 }
 
+#[cfg(feature = "std")]
 // A shortcut, since `Path` does not implement `Default`.
 impl Default for CowArc<'static, Path> {
     /// Returns an empty [`Path`], wrapped in [`CowArc::Static`].
@@ -191,13 +206,14 @@ impl Default for CowArc<'static, Path> {
     }
 }
 
-impl<'a, T: Ord + ?Sized> Ord for CowArc<'a, T> {
+impl<T: Ord + ?Sized> Ord for CowArc<'_, T> {
     #[inline]
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+    fn cmp(&self, other: &Self) -> core::cmp::Ordering {
         self.deref().cmp(other.deref())
     }
 }
 
+#[cfg(feature = "std")]
 impl From<PathBuf> for CowArc<'static, Path> {
     #[inline]
     fn from(value: PathBuf) -> Self {
@@ -205,6 +221,7 @@ impl From<PathBuf> for CowArc<'static, Path> {
     }
 }
 
+#[cfg(feature = "std")]
 impl From<&'static str> for CowArc<'static, Path> {
     #[inline]
     fn from(value: &'static str) -> Self {
