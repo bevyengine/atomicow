@@ -1,6 +1,6 @@
 [package]
 name = "atomicow"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2021"
 rust-version = "1.63.0"
 description = "A `Cow`-like data structure where owned data is stored inside an `Arc`."
@@ -15,6 +15,4 @@ std = []
 
 [target.'cfg(not(target_has_atomic = "ptr"))'.dependencies]
 portable-atomic = { version = "1", default-features = false }
-portable-atomic-util = { version = "0.2.4", features = [
-  "alloc",
-] }
+portable-atomic-util = { version = "0.2.4", features = ["alloc"] }
