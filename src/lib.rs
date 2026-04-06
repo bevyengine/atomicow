@@ -250,7 +250,7 @@ impl<T: ?Sized> From<&'static T> for CowArc<'static, T> {
     }
 }
 
-impl<T> From<Arc<T>> for CowArc<'static, T> {
+impl<T: ?Sized> From<Arc<T>> for CowArc<'static, T> {
     #[inline]
     fn from(value: Arc<T>) -> Self {
         CowArc::Owned(value)
