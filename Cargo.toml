@@ -1,6 +1,6 @@
 [package]
 name = "atomicow"
-version = "1.1.0"
+version = "1.2.0"
 edition = "2021"
 rust-version = "1.63.0"
 description = "A `Cow`-like data structure where owned data is stored inside an `Arc`."
