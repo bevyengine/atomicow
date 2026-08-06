@@ -1,5 +1,9 @@
 # `atomicow` Release Notes
 
+## Unreleased
+
+Added the `serde` feature
+
 ## Version 1.2
 
 The `T` in `Arc<T>` can now be `!Sized` when converting into an `CowArc<'static, T>`
