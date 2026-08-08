@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-Added the `serde` feature
+Added the `serde` feature, allowing the serialization and deserialization of `CowArc<T>` types when the contained type implements the appropriate trait.
 
 ## Version 1.2
 
