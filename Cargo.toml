@@ -8,10 +8,12 @@ repository = "https://github.com/bevyengine/atomicow"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+serde = { version = "1", default-features = false, features = ["alloc"], optional = true }
 
 [features]
 default = ["std"]
 std = []
+serde = ["dep:serde"]
 
 [target.'cfg(not(target_has_atomic = "ptr"))'.dependencies]
 portable-atomic = { version = "1", default-features = false }

@@ -182,6 +182,128 @@ impl<T: Display + ?Sized> Display for CowArc<'_, T> {
     }
 }
 
+#[cfg(feature = "serde")]
+impl<T: serde::Serialize + ?Sized> serde::Serialize for CowArc<'_, T> {
+    #[inline]
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serde::Serialize::serialize(self.deref(), serializer)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, T> serde::Deserialize<'de> for CowArc<'static, T>
+where
+    T: serde::Deserialize<'de>,
+{
+    #[inline]
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        <T as serde::Deserialize>::deserialize(deserializer).map(CowArc::new_owned)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, T> serde::Deserialize<'de> for CowArc<'static, [T]>
+where
+    T: serde::Deserialize<'de> + 'static,
+{
+    #[inline]
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct SliceVisitor<T>(core::marker::PhantomData<T>);
+
+        impl<'de, T> serde::de::Visitor<'de> for SliceVisitor<T>
+        where
+            T: serde::Deserialize<'de> + 'static,
+        {
+            type Value = CowArc<'static, [T]>;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+                formatter.write_str("a sequence")
+            }
+
+            fn visit_seq<A>(self, mut sequence: A) -> Result<Self::Value, A::Error>
+            where
+                A: serde::de::SeqAccess<'de>,
+            {
+                let mut values = alloc::vec::Vec::new();
+
+                while let Some(value) = sequence.next_element()? {
+                    values.push(value);
+                }
+
+                Ok(CowArc::Owned(Arc::from(values)))
+            }
+        }
+
+        deserializer.deserialize_seq(SliceVisitor(core::marker::PhantomData))
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for CowArc<'static, str> {
+    #[inline]
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct StrVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for StrVisitor {
+            type Value = CowArc<'static, str>;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+                formatter.write_str("a string")
+            }
+
+            fn visit_borrowed_str<E>(self, value: &'de str) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(CowArc::Owned(Arc::from(value)))
+            }
+
+            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(CowArc::Owned(Arc::from(value)))
+            }
+
+            fn visit_bytes<E>(self, value: &[u8]) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                let value = core::str::from_utf8(value).map_err(E::custom)?;
+                self.visit_str(value)
+            }
+
+            fn visit_borrowed_bytes<E>(self, value: &'de [u8]) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                self.visit_bytes(value)
+            }
+
+            fn visit_string<E>(self, value: String) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(CowArc::Owned(Arc::from(value)))
+            }
+        }
+
+        deserializer.deserialize_str(StrVisitor)
+    }
+}
+
 impl<T: PartialOrd + ?Sized> PartialOrd for CowArc<'_, T> {
     #[inline]
     fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {

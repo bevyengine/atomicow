@@ -1,5 +1,9 @@
 # `atomicow` Release Notes
 
+## Unreleased
+
+Added the `serde` feature, allowing the serialization and deserialization of `CowArc<T>` types when the contained type implements the appropriate trait.
+
 ## Version 1.2
 
 The `T` in `Arc<T>` can now be `!Sized` when converting into an `CowArc<'static, T>`
